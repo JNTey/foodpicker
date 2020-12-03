@@ -1,0 +1,66 @@
+
+li{
+    list-style-type: none;
+}
+
+body {
+    font-family: Avenir;
+    /* font-size: larger; */
+    margin: 0;
+}
+
+#menu {
+    height: 100px;
+    background-color: #b94bb0;
+}
+#menu h1{
+    float: left;
+    width: 300px;
+    line-height:50px;
+    text-align: center;
+    position:relative;
+    border:none;
+    font-size:30px;
+    display:block;
+}
+#menu li{
+    float: right;
+    width: 150px;
+    line-height:100px;
+    text-align: center;
+    position:relative;
+    border:none;
+}
+#menu li a { /*一级导航栏字*/
+    font-size:18px;
+    color: black;
+    display:block;
+    outline:0;
+    text-decoration:none;
+}
+#menu li:hover a { /*导航栏变色颜色 */
+    /* background-color: #FFC18E; */
+    color: #FF8F2F;
+    height: 60px;
+}
+
+.content{
+    -ms-flex: 100%; /* IE10 */
+    flex: 100%;
+    background: #FFC18E;
+    padding: 100px;
+    
+
+}
+.content h1{
+    float: center;
+    width: 500px;
+    line-height:50px;
+    text-align: center;
+    position:relative;
+    border:none;
+    font-size:24px;
+    display:block;
+    color: blueviolet;
+
+}
