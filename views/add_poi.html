@@ -14,23 +14,71 @@
 
         <div id="menu">
             <ul>
-                <h1>FOOD PICKER</h1>
-                <li><a href="/generate" class="nodrop">Generate a POI</a></li>
-                <li><a href="/add" class="nodrop">Add a POI</a></li>
+                <h1>FOOD POI PICKER</h1>
+                <li><a href="/generate_poi" class="nodrop">Generate a POI</a></li>
+                <li><a href="/add_poi" class="nodrop">Add a POI</a></li>
             </ul>
           </div>
 
           <div class="content">
               <h1>ADD A PLACE OF INTEREST</h1>
-              <form>
-                  <p>Select Category:</p>
-                  <p>Add Place of Interest:</p>
-                  <button>SUBMIT</button>
+
+              <form  method="POST">
+                <p>
+                    <label for="category">Choose a Category: </label>
+                    <select id="categories" name="categories" onchange="new_category(this)" required>
+                        <option value="cheap">Cheap</option>
+                        <option value="expensive">Expensive</option>
+                        <option value="new" id="new">New Category</option>
+                    </select>
+                    <br>
+                </p>
+                <p id="create_new">
+                    
+                </p>
+                <p>
+                    <label for="poi">Add a Place of Interest: </label>
+                    <input type="text" id="poi" name="poi" required>
+                    <br>
+                </p>
+                <br><br>
+                <button class="btn" onclick="store_info()">SUBMIT</button>
 
               </form>
+
           </div>
     
         <script>
+
+
+            function new_category(category){
+                var p = document.getElementById("create_new");
+                p.style.display = "none";
+                if(category.value == "new"){
+                    p.style.display = "block";
+                    create_input(p);
+                } 
+                else{
+                    p.style.display = "none";
+                }
+            }
+
+            function create_input(para){
+                    var l = document.createElement("LABEL");
+                    l = "Add a New Category: ";
+                    var q = document.createElement("INPUT");
+                    q.setAttribute("type", "text");
+                    q.required = true;
+                    
+                    para.innerHTML = l;
+                    para.appendChild(q);     
+            }
+
+            function store_info(){
+                alert("New POI Created.");
+
+
+            }
     
         </script>
     

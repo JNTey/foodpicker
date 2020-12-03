@@ -1,0 +1,109 @@
+<html>
+
+    <head>
+        <title>Generate Place of Interest</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=GlS5pArm-6QY4O44pafcaRW8C4jnlq4MAsa7EsUqZQLeN_cWTP46kxDxN-psyr9fP_ZnPWekCMIjOUgFgOtf4e-QVRaesZ2XoJcyVDHDS4JuWEqlzT8E5-q9HlRj362Pl7m4fZIRSkS2KWYcWmxELI2ckaE-2GsfnfQ8NCzrNcO1xJciLJuiiHGGEU9aOyc7UHJ-P00ImPPrimU93gy3E5Qz1zdrHfKDInxgZ8mNqR8ATs5FNVKnmqUZ2AovsayBb8MQ-yb4qfRJ3sZqD4Pwa1vTRRKA6w57l7BRm2TVRTyueuxtk7NJShTPrU70Clp4C7M1U4YQwIk-0NUoMleSv4c65YbBsEAwAkBw_Ro3hKV8grcALdzX06KzDlwSjTtoVfsXgEjLXx44HofsudoGZ7te-nqPfNmF2DhH8lBbizfxup6srWoguL7MEwaOBhmRG8YFSQTp6WWDP6NxKHKTXWENF_fZDoZoVFEe5pU1Om8" charset="UTF-8">
+        </script>
+        <link rel='stylesheet' type="text/css" href='main.css'>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    </head>
+    
+    <body>
+
+        <div id="menu">
+            <ul>
+                <h1>FOOD POI PICKER</h1>
+                <li><a href="/generate" class="nodrop">Generate a POI</a></li>
+                <li><a href="/add" class="nodrop">Add a POI</a></li>
+            </ul>
+          </div>
+
+          <div class="content">
+              <h1>GENERATE A PLACE OF INTEREST</h1>
+                <p>
+                    <label for="category">Filter Category: </label>
+                    <input type="radio" id="show" name="showhide" value="Show" onclick="showhide()" checked="true">
+                    <label for="Show"> Show All</label>
+                    <input type="radio" id="hide" name="showhide" value="Hide" onclick="showhide()">
+                    <label for="Hide"> Hide All</label>
+                    <br>
+                    <input type="checkbox" id="category1" name="category1" value="Cheap" checked="true">
+                    <label for="category1"> Cheap</label>
+                    <input type="checkbox" id="category2" name="category2" value="Expensive" checked="true">
+                    <label for="category2"> Expensive</label>
+                    <br>
+                </p>
+            
+                <br><br>
+                <button class="btn" onclick="generate()">GENERATE</button>
+                <br><br>
+
+                <div id="result">
+                </div>
+              
+          </div>
+    
+        <script>
+
+            var r = document.getElementById("result");
+
+
+            function generate(){
+                var g;
+                var hash = {
+                    "Cheap":[
+                        "Nasi Lemak",
+                        "Roti Canai"
+                    ],
+                    "Expensive":[
+                        "Dim Sum"
+                    ]
+                }
+
+                var filtered =[];
+
+                for(i=1;i<3;i++){
+                        var check = document.getElementById("category"+i);
+                        if (check.checked == true){
+                            for(h of hash[check.value]){
+                                filtered.push(h);
+                            }
+                        }
+                }
+                
+                g = filtered[Math.floor(Math.random() * filtered.length)];
+                if (g==null){
+                    g="No POI Selected.";
+                }
+                r.innerHTML = "<h1>Place Of Interest: <h1>" + g; 
+                
+            }
+
+            function showhide(){
+                var show = document.getElementById("show");
+                var hide = document.getElementById("hide");
+                if (show.checked == true){
+                    // alert("SHOW ALL");
+                    for(i=1;i<10;i++){
+                        var check = document.getElementById("category"+i);
+                        check.checked = true;
+                    }
+                }
+                else if (hide.checked == true){
+                    // alert("HIDE ALL");
+                    for(i=1;i<10;i++){
+                        var check = document.getElementById("category"+i);
+                        check.checked = false;
+                    }
+                }
+
+            }
+    
+        </script>
+    
+    </body>
+
+</html>
+

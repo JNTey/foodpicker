@@ -11,7 +11,7 @@ body {
 
 #menu {
     height: 100px;
-    background-color: #b94bb0;
+    background-color: #e46887;
 }
 #menu h1{
     float: left;
@@ -40,15 +40,15 @@ body {
 }
 #menu li:hover a { /*导航栏变色颜色 */
     /* background-color: #FFC18E; */
-    color: #FF8F2F;
+    color: #ffffff;
     height: 60px;
 }
 
 .content{
     -ms-flex: 100%; /* IE10 */
     flex: 100%;
-    background: #FFC18E;
-    padding: 100px;
+    background: #ffffff;
+    padding: 50px;
     
 
 }
@@ -56,11 +56,22 @@ body {
     float: center;
     width: 500px;
     line-height:50px;
-    text-align: center;
+    text-align: left;
     position:relative;
     border:none;
     font-size:24px;
     display:block;
-    color: blueviolet;
+    color: #e46887;
 
 }
+
+.btn{
+    background: #e46887;
+    width: 262px;
+    height: 40px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+  }
