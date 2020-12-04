@@ -133,31 +133,48 @@
             function generate(){
                 var g;
                 var filtered =[];
+                var openclose = document.getElementById("open").checked;
+                var allopen = false;
                 // alert()
                 for (var i=1; i<=checkboxes.length; i++){
                     var check = document.getElementById("category"+i);
                     if (check.checked == true){
                         for(h of hashdata){
                             if (h["category"]==check.value){
-                                if(!h.hasOwnProperty("closingdays")){
-                                    filtered.push(h);
+                                if (openclose==true){
+                                    if(!h.hasOwnProperty("closingdays")){
+                                        filtered.push(h);
+                                    }
+                                    else if((!h["closingdays"].includes(day))){
+                                        filtered.push(h);
+                                    }
                                 }
-                                else if((!h["closingdays"].includes(day))){
-                                    filtered.push(h);
+                                else if (openclose==false){
+                                    if(!h.hasOwnProperty("closingdays")){
+                                        continue;
+                                    }
+                                    else if((h["closingdays"].includes(day))){
+                                        filtered.push(h);
+                                    }
                                 }
+                    
                             }
                         }
                     }
                 }
-                
+
                 g = filtered[Math.floor(Math.random() * filtered.length)];
-                if (g==null){
-                    var poi ="<h2>Please Select At Least A Category.";
+
+                if(openclose==false&&g==null){
+                    let poi ="<h2>All Places Are Open Today!";
+                    r.innerHTML = poi;
+                }                
+                else if (g==null){
+                    let poi ="<h2>Please Select At Least A Category.";
                     r.innerHTML = poi; 
                 }
                 else{
                     r.innerHTML = "<h1>Place Of Interest: </h1>" + "<h2>"+g["poi"]+"</h2><h3>Address: "+g["address"]; 
-
                 }
                  
             }
@@ -179,7 +196,6 @@
                         check.checked = false;
                     }
                 }
-
             }
     
         </script>
