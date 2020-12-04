@@ -4,51 +4,56 @@ li{
 }
 
 body {
-    font-family: Avenir;
-    /* font-size: larger; */
+    /* font-family: Avenir; */
     margin: 0;
 }
 
 #menu {
-    height: 100px;
+    height: 80px;
     background-color: #e46887;
 }
 #menu h1{
     float: left;
     width: 300px;
-    line-height:50px;
-    text-align: center;
-    position:relative;
+    line-height:45px;
+    text-align: left;
+    position:left;
     border:none;
     font-size:30px;
     display:block;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 #menu li{
     float: right;
     width: 150px;
-    line-height:100px;
+    line-height:80px;
     text-align: center;
     position:relative;
     border:none;
 }
-#menu li a { /*一级导航栏字*/
+#menu li a { 
     font-size:18px;
     color: black;
     display:block;
     outline:0;
     text-decoration:none;
 }
-#menu li:hover a { /*导航栏变色颜色 */
-    /* background-color: #FFC18E; */
+#menu li:hover a { 
     color: #ffffff;
     height: 60px;
 }
 
+.required{
+    color: #e46887;
+}
+
+
 .content{
-    -ms-flex: 100%; /* IE10 */
+    -ms-flex: 100%; 
     flex: 100%;
     background: #ffffff;
-    padding: 10px;
+    padding: 45px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     
 
 }
@@ -62,16 +67,20 @@ body {
     font-size:24px;
     display:block;
     color: #e46887;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 
 }
 
 .btn{
     background: #e46887;
-    width: 262px;
+    width: 250px;
     height: 40px;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 8px;
     font-size: 16px;
     color: rgb(0, 0, 0);
     font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
+
+  

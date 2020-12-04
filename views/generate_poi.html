@@ -42,7 +42,7 @@
                     <br>
                 </p>
             
-                <br><br>
+                <br>
                 <button class="btn" onclick="generate()">GENERATE</button>
                 <br><br>
 
@@ -152,10 +152,14 @@
                 
                 g = filtered[Math.floor(Math.random() * filtered.length)];
                 if (g==null){
-                    g="Please Select At Least A Category.";
+                    var poi ="<h2>Please Select At Least A Category.";
+                    r.innerHTML = poi; 
                 }
-                r.innerHTML = "<h1>Place Of Interest: </h1>" + "<h2>"+g["poi"]+"</h2><br><h3>Address: "+g["address"]; 
-                
+                else{
+                    r.innerHTML = "<h1>Place Of Interest: </h1>" + "<h2>"+g["poi"]+"</h2><h3>Address: "+g["address"]; 
+
+                }
+                 
             }
 
             function showhide(){

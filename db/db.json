@@ -2,15 +2,18 @@
     [
         {
             "category": "Cheap",
-            "poi": "Nasi Lemak"
+            "poi": "Nasi Lemak",
+            "address":"USJ 11"
         },
         {
             "category": "Expensive",
-            "poi": "Dim Sum"
+            "poi": "Dim Sum",
+            "address":"PJ"
         },
         {
             "category": "Cheap",
-            "poi": "Roti Canai"
+            "poi": "Roti Canai",
+            "address":"SS15"
         }
     ]
 

@@ -26,6 +26,7 @@
               <form action="/" method="POST" name="form" id="form">
                 <p id="choose_category">
                     <label>Choose a Category (Or type to create a new one):</label>
+                    <label class="required">*</label>
                     
                     <input id="categories1" list="categories" onchange="get_data()" name="category" required>
                     <datalist id="categories" name="category" >
@@ -34,9 +35,12 @@
                 </p>
                 <p>
                     <label for="new_category">Add a Place of Interest: </label>
+                    <label class="required">*</label>
                     <input type="text" id="poi" name="poi" required>
                     <br><br>
+
                     <label for="address">POI Address: </label>
+                    <label class="required">*</label>
                     <input type="text" id="address" name="address" required>
                     <br>
                     <p name="closingdays">
@@ -91,12 +95,12 @@
                 
                 let unique = filterarray.filter((item, i, ar) => ar.indexOf(item) === i);
 
-                var c = document.getElementById("categories");
+                var cat = document.getElementById("categories");
                 for(u of unique){
-                    var o = document.createElement("option");
-                    o.setAttribute("value", u);
-                    o.setAttribute("name", "category");
-                    c.appendChild(o);
+                    var op = document.createElement("option");
+                    op.setAttribute("value", u);
+                    op.setAttribute("name", "category");
+                    cat.appendChild(op);
 
                 }
             }
@@ -109,7 +113,8 @@
             function validate_info(){
                 var c = document.getElementById("categories1").value;
                 var p = document.getElementById("poi").value;
-                if (c=="" || p==""){
+                var a = document.getElementById("address").value;
+                if (c=="" || p=="" || a==""){
                     alert("ERROR: Please fill in all fields.");
                 }
                 else{
