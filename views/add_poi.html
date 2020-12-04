@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=GlS5pArm-6QY4O44pafcaRW8C4jnlq4MAsa7EsUqZQLeN_cWTP46kxDxN-psyr9fP_ZnPWekCMIjOUgFgOtf4e-QVRaesZ2XoJcyVDHDS4JuWEqlzT8E5-q9HlRj362Pl7m4fZIRSkS2KWYcWmxELI2ckaE-2GsfnfQ8NCzrNcO1xJciLJuiiHGGEU9aOyc7UHJ-P00ImPPrimU93gy3E5Qz1zdrHfKDInxgZ8mNqR8ATs5FNVKnmqUZ2AovsayBb8MQ-yb4qfRJ3sZqD4Pwa1vTRRKA6w57l7BRm2TVRTyueuxtk7NJShTPrU70Clp4C7M1U4YQwIk-0NUoMleSv4c65YbBsEAwAkBw_Ro3hKV8grcALdzX06KzDlwSjTtoVfsXgEjLXx44HofsudoGZ7te-nqPfNmF2DhH8lBbizfxup6srWoguL7MEwaOBhmRG8YFSQTp6WWDP6NxKHKTXWENF_fZDoZoVFEe5pU1Om8" charset="UTF-8">
         </script>
-        <link rel='stylesheet' type="text/css" href='main.css'>
+        <link rel='stylesheet' type="text/css" href='./main.css'>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     </head>
     
@@ -15,69 +15,106 @@
         <div id="menu">
             <ul>
                 <h1>FOOD POI PICKER</h1>
-                <li><a href="/generate_poi" class="nodrop">Generate a POI</a></li>
-                <li><a href="/add_poi" class="nodrop">Add a POI</a></li>
+                <li><a href="/add" class="nodrop">Add a POI</a></li>
+                <li><a href="/generate" class="nodrop">Generate a POI</a></li>
             </ul>
           </div>
 
           <div class="content">
               <h1>ADD A PLACE OF INTEREST</h1>
 
-              <form  method="POST">
-                <p>
-                    <label for="category">Choose a Category: </label>
-                    <select id="categories" name="categories" onchange="new_category(this)" required>
-                        <option value="cheap">Cheap</option>
-                        <option value="expensive">Expensive</option>
-                        <option value="new" id="new">New Category</option>
-                    </select>
-                    <br>
+              <form action="/" method="POST" name="form" id="form">
+                <p id="choose_category">
+                    <label>Choose a Category (Or type to create a new one):</label>
+                    
+                    <input id="categories1" list="categories" onchange="get_data()" name="category" required>
+                    <datalist id="categories" name="category" >
+                    </datalist>
+                    <br><br>
                 </p>
-                <p id="create_new">
+                <p>
+                    <label for="new_category">Add a Place of Interest: </label>
+                    <input type="text" id="poi" name="poi" required>
+                    <br><br>
+                    <label for="address">POI Address: </label>
+                    <input type="text" id="address" name="address" required>
+                    <br>
+                    <p name="closingdays">
+                        <label for="days">Closing Days: </label>
+                        <input type="checkbox" id="sunday" name="closingdays" value="Sunday">
+                        <label for="sun"> Sun</label>
+                        <input type="checkbox" id="monday" name="closingdays" value="Monday">
+                        <label for="mon"> Mon</label>
+                        <input type="checkbox" id="tuesday" name="closingdays" value="Tuesday">
+                        <label for="tue"> Tues</label>
+                        <input type="checkbox" id="wednesday" name="closingdays" value="Wednesday">
+                        <label for="wed"> Wed</label>
+                        <input type="checkbox" id="thursday" name="closingdays" value="Thursday">
+                        <label for="thu"> Thurs</label>
+                        <input type="checkbox" id="friday" name="closingdays" value="Friday">
+                        <label for="fri"> Fri</label>
+                        <input type="checkbox" id="saturday" name="closingdays" value="Saturday">
+                        <label for="sat"> Sat</label>
+                    </p>
+                    
                     
                 </p>
-                <p>
-                    <label for="poi">Add a Place of Interest: </label>
-                    <input type="text" id="poi" name="poi" required>
-                    <br>
-                </p>
                 <br><br>
-                <button class="btn" onclick="store_info()">SUBMIT</button>
-
+                <button class="btn" onclick="validate_info()" type="submit">SUBMIT</button>
               </form>
 
-          </div>
-    
-        <script>
+        </div>
+
+        <script type="text/javascript" src="../server.js"></script>
+        <script  type="text/javascript">
+
+            var filterarray = new Array;  
+
+            const form = document.querySelector("#form");
+            if (form){
+                form.addEventListener("submit", function(e){
+                    submitForm(e, this);
+                })
+            }
 
 
-            function new_category(category){
-                var p = document.getElementById("create_new");
-                p.style.display = "none";
-                if(category.value == "new"){
-                    p.style.display = "block";
-                    create_input(p);
-                } 
-                else{
-                    p.style.display = "none";
+            fetch("http://localhost:3000/")
+            .then(response => response.json())
+            .then(categories => showcategories(categories["data"]));
+
+            showcategories = categories => {
+                const categoriesDiv = document.querySelector("#choose_category");
+                
+                categories.forEach(category => {
+                    filterarray.push(category["category"]);
+                });
+                
+                let unique = filterarray.filter((item, i, ar) => ar.indexOf(item) === i);
+
+                var c = document.getElementById("categories");
+                for(u of unique){
+                    var o = document.createElement("option");
+                    o.setAttribute("value", u);
+                    o.setAttribute("name", "category");
+                    c.appendChild(o);
+
                 }
             }
 
-            function create_input(para){
-                    var l = document.createElement("LABEL");
-                    l = "Add a New Category: ";
-                    var q = document.createElement("INPUT");
-                    q.setAttribute("type", "text");
-                    q.required = true;
-                    
-                    para.innerHTML = l;
-                    para.appendChild(q);     
+            function get_data(){
+                var val = document.getElementById("categories1").value;
+                var name = document.getElementById("categories1").name;
             }
-
-            function store_info(){
-                alert("New POI Created.");
-
-
+        
+            function validate_info(){
+                var c = document.getElementById("categories1").value;
+                var p = document.getElementById("poi").value;
+                if (c=="" || p==""){
+                    alert("ERROR: Please fill in all fields.");
+                }
+                else{
+                    alert("POI CREATED.");
+                } 
             }
     
         </script>

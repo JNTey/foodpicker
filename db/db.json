@@ -1,0 +1,17 @@
+{"data":
+    [
+        {
+            "category": "Cheap",
+            "poi": "Nasi Lemak"
+        },
+        {
+            "category": "Expensive",
+            "poi": "Dim Sum"
+        },
+        {
+            "category": "Cheap",
+            "poi": "Roti Canai"
+        }
+    ]
+
+}

@@ -15,24 +15,30 @@
         <div id="menu">
             <ul>
                 <h1>FOOD POI PICKER</h1>
-                <li><a href="/generate" class="nodrop">Generate a POI</a></li>
                 <li><a href="/add" class="nodrop">Add a POI</a></li>
+                <li><a href="/generate" class="nodrop">Generate a POI</a></li>
             </ul>
           </div>
 
           <div class="content">
               <h1>GENERATE A PLACE OF INTEREST</h1>
-                <p>
+                <p id="date">    
+                </p>
+                <p method = "GET">
                     <label for="category">Filter Category: </label>
                     <input type="radio" id="show" name="showhide" value="Show" onclick="showhide()" checked="true">
                     <label for="Show"> Show All</label>
                     <input type="radio" id="hide" name="showhide" value="Hide" onclick="showhide()">
                     <label for="Hide"> Hide All</label>
                     <br>
-                    <input type="checkbox" id="category1" name="category1" value="Cheap" checked="true">
-                    <label for="category1"> Cheap</label>
-                    <input type="checkbox" id="category2" name="category2" value="Expensive" checked="true">
-                    <label for="category2"> Expensive</label>
+                    <div id="filters">
+                    </div>
+                    <br>
+                    <div id="filters2">
+                        <label for="others">Filter Others: </label>
+                        <input type="checkbox" id="open" name="opendays" value="Open" checked="true">
+                        <label for="sun"> Open Today</label>
+                    </div>
                     <br>
                 </p>
             
@@ -45,39 +51,110 @@
               
           </div>
     
-        <script>
+        <script type="text/javascript" src="../server.js"></script>
+
+        <script  type="text/javascript">
 
             var r = document.getElementById("result");
+            var checkboxes = document.getElementsByClassName('check');
+            var filterarray = new Array;
+            var hashdata = {};
+            var day='';
 
+            get_date();
 
-            function generate(){
-                var g;
-                var hash = {
-                    "Cheap":[
-                        "Nasi Lemak",
-                        "Roti Canai"
-                    ],
-                    "Expensive":[
-                        "Dim Sum"
-                    ]
+            fetch("http://localhost:3000/")
+            .then(response => response.json())
+            .then(categories => showcategories(categories["data"]));
+
+            showcategories = categories => {
+                const categoriesDiv = document.querySelector("#filters");
+                
+                hashdata = categories;
+                
+                hashdata.forEach(category => {
+                    filterarray.push(category["category"]);
+                });
+                
+                let unique = filterarray.filter((item, i, ar) => ar.indexOf(item) === i);
+
+                let i = 1;
+
+                unique.forEach(u=>{
+                    const categoryElement = document.createElement("text");
+                    var check = document.createElement("input");
+                    check.setAttribute("type", "checkbox");
+                    check.setAttribute("checked", "true");
+                    check.setAttribute("id", "category"+i);
+                    check.setAttribute("class", "check");
+                    check.setAttribute("value", u);
+                    categoriesDiv.appendChild(check);
+                    categoryElement.innerHTML = u+ "     ";
+                    categoriesDiv.append(categoryElement);
+                    i++;
+                    // alert(check.value);
+
+                });
+            }
+
+            function get_date(){
+                var d = new Date();
+                var n = d.getDay();
+                
+                switch(n){
+                    case 0:
+                        day = "Sunday";
+                        break;
+                    case 1:
+                        day = "Monday";
+                        break;
+                    case 2:
+                        day = "Tuesday";
+                        break;
+                    case 3:
+                        day = "Wednesday";
+                        break;
+                    case 4:
+                        day = "Thursday";
+                        break;
+                    case 5:
+                        day = "Friday";
+                        break;
+                    case 6:
+                        day = "Saturday";
+                        break;
                 }
 
+                document.getElementById("date").innerHTML ="<h3>Today is: "+ day;
+                
+            }
+            
+            
+            function generate(){
+                var g;
                 var filtered =[];
-
-                for(i=1;i<3;i++){
-                        var check = document.getElementById("category"+i);
-                        if (check.checked == true){
-                            for(h of hash[check.value]){
-                                filtered.push(h);
+                // alert()
+                for (var i=1; i<=checkboxes.length; i++){
+                    var check = document.getElementById("category"+i);
+                    if (check.checked == true){
+                        for(h of hashdata){
+                            if (h["category"]==check.value){
+                                if(!h.hasOwnProperty("closingdays")){
+                                    filtered.push(h);
+                                }
+                                else if((!h["closingdays"].includes(day))){
+                                    filtered.push(h);
+                                }
                             }
                         }
+                    }
                 }
                 
                 g = filtered[Math.floor(Math.random() * filtered.length)];
                 if (g==null){
-                    g="No POI Selected.";
+                    g="Please Select At Least A Category.";
                 }
-                r.innerHTML = "<h1>Place Of Interest: <h1>" + g; 
+                r.innerHTML = "<h1>Place Of Interest: </h1>" + "<h2>"+g["poi"]+"</h2><br><h3>Address: "+g["address"]; 
                 
             }
 
@@ -86,14 +163,14 @@
                 var hide = document.getElementById("hide");
                 if (show.checked == true){
                     // alert("SHOW ALL");
-                    for(i=1;i<10;i++){
+                    for (var i=1; i<=checkboxes.length; i++){
                         var check = document.getElementById("category"+i);
                         check.checked = true;
                     }
                 }
                 else if (hide.checked == true){
                     // alert("HIDE ALL");
-                    for(i=1;i<10;i++){
+                    for (var i=1; i<=checkboxes.length; i++){
                         var check = document.getElementById("category"+i);
                         check.checked = false;
                     }
